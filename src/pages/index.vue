@@ -16,7 +16,7 @@ const props = defineProps({
 
 const films = ref([]);
 const page = ref(props.page ?? 1);
-const perPage = route.query["page"] ?? 4;
+const perPage = 4;
 
 onMounted(async () => {
   const res = await fetch("https://ghibliapi.vercel.app/films");
