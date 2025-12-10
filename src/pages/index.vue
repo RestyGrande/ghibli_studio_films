@@ -2,6 +2,7 @@
 import Banner from "@/components/Banner.vue";
 import Header from "@/components/Header.vue";
 import Pagination from "@/components/Pagination.vue";
+import Spinner from "@/components/Spinner.vue";
 import FilmCard from "../components/FilmCard.vue";
 
 import { computed, onMounted, ref } from "vue";
@@ -15,7 +16,7 @@ const props = defineProps({
 
 const films = ref([]);
 const page = ref(props.page ?? 1);
-const perPage = route.query["page"] ?? 12;
+const perPage = route.query["page"] ?? 4;
 
 onMounted(async () => {
   const res = await fetch("https://ghibliapi.vercel.app/films");
@@ -34,7 +35,7 @@ const paginatedFilms = computed(() => {
   <Header />
   <Banner />
 
-  <main class="mx-auto w-full max-w-5xl px-4">
+  <main class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-4">
     <div
       v-if="films.length === 0"
       class="py-10 text-center text-gray-500 text-lg"
@@ -51,7 +52,7 @@ const paginatedFilms = computed(() => {
 
     <div
       v-else
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center"
+      class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center"
     >
       <div v-for="film in paginatedFilms" :key="film.id" class="w-full">
         <FilmCard :film="film" />

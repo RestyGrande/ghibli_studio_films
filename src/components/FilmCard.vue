@@ -8,26 +8,26 @@ defineProps({
 
 <template>
   <div
-    class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col h-full"
+    class="bg-white rounded-xl shadow hover:shadow-lg transition p-2 sm:p-3 flex flex-col h-full"
   >
     <img
       :src="film.image"
       :alt="film.title"
-      class="w-full h-60 object-cover rounded-lg mb-3"
+      class="w-full h-40 sm:h-52 md:h-60 object-cover rounded-lg mb-3"
     />
 
-    <h3 class="font-bold text-lg">
+    <h3 class="font-bold text-base sm:text-lg leading-tight">
       {{ film.title }}
-      <span class="text-gray-500 text-sm block">
+      <span class="text-gray-500 text-xs sm:text-sm block">
         ({{ film.original_title }})
       </span>
     </h3>
 
-    <p class="text-gray-600 text-sm mt-2 line-clamp-3">
+    <p class="text-gray-600 text-xs sm:text-sm mt-2 line-clamp-3">
       {{ film.description }}
     </p>
 
-    <div class="mt-3 text-sm text-gray-700 space-y-1">
+    <div class="mt-3 text-xs sm:text-sm text-gray-700 space-y-1">
       <p><span class="font-semibold">Release:</span> {{ film.release_date }}</p>
       <p>
         <span class="font-semibold">Rating:</span>
@@ -37,7 +37,7 @@ defineProps({
 
     <router-link
       :to="`/film/${film.id}`"
-      class="mt-10 bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-lg text-sm font-medium transition"
+      class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition"
     >
       View Details
     </router-link>
