@@ -18,7 +18,7 @@ const displayScore = computed(() => `${props.score}/100`);
       <span v-else>☆</span>
     </span>
 
-    <span class="text-sm text-gray-500 ml-1">
+    <span class="text-sm text-gray-500 ml-1 sm:text-xs hidden sm:block">
       {{ displayScore }}
     </span>
   </div>
