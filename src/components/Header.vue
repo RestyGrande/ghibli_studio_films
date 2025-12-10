@@ -1,3 +1,8 @@
+<script setup>
+import { ref } from "vue";
+const isOpen = ref(false);
+</script>
+
 <template>
   <header class="w-full py-4">
     <div class="max-w-screen-lg mx-auto flex items-center justify-between px-4">
@@ -69,11 +74,6 @@
     </transition>
   </header>
 </template>
-
-<script setup>
-import { ref } from "vue";
-const isOpen = ref(false);
-</script>
 
 <style>
 .fade-enter-active,

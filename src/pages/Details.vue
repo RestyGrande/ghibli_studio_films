@@ -3,17 +3,18 @@ import Header from "@/components/Header.vue";
 import Spinner from "@/components/Spinner.vue";
 import StarRating from "@/components/StarRating.vue";
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
 
-const route = useRoute();
+const props = defineProps({
+  id: String,
+});
+
 const film = ref(null);
 const error = ref(false);
 
 onMounted(async () => {
   try {
-    const res = await fetch(
-      `https://ghibliapi.vercel.app/films/${route.params.id}`
-    );
+    if (!props.id) return [];
+    const res = await fetch(`https://ghibliapi.vercel.app/films/${props.id}`);
 
     if (!res.ok) {
       error.value = true;
@@ -36,44 +37,39 @@ onMounted(async () => {
 
 <template>
   <Header />
+
   <div v-if="film" class="mx-auto w-full max-w-5xl px-4 py-10">
-    <div class="flex gap-4">
-      <div class="flex-shrink-0" style="max-width: 350px">
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="w-full md:w-1/3">
         <img
           :src="film.image"
           :alt="film.title"
-          class="img-fluid rounded shadow-sm"
+          class="w-full h-auto rounded-lg shadow"
         />
       </div>
 
-      <div class="flex-grow-1">
-        <h2 class="font-bold text-lg mb-2">{{ film.title }}</h2>
-        <small class="text-muted d-block mb-3">
-          {{ film.original_title }} - {{ film.original_title_romanised }}
+      <div class="flex-1">
+        <h2 class="font-bold text-2xl mb-1">{{ film.title }}</h2>
+        <small class="text-gray-500 block mb-4 text-sm">
+          {{ film.original_title }} — {{ film.original_title_romanised }}
         </small>
 
-        <p class="fs-5">{{ film.description }}</p>
+        <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+          {{ film.description }}
+        </p>
 
-        <ul class="list-group mt-4">
-          <li class="list-group-item">
-            <strong>Director:</strong> {{ film.director }}
-          </li>
-          <li class="list-group-item">
-            <strong>Producer:</strong> {{ film.producer }}
-          </li>
-          <li class="list-group-item">
-            <strong>Release Date:</strong> {{ film.release_date }}
-          </li>
-          <li class="list-group-item">
-            <strong>Running Time:</strong> {{ film.running_time }} min
-          </li>
-          <li class="list-group-item">
+        <ul class="mt-6 space-y-3 text-sm sm:text-base">
+          <li><strong>Director:</strong> {{ film.director }}</li>
+          <li><strong>Producer:</strong> {{ film.producer }}</li>
+          <li><strong>Release Date:</strong> {{ film.release_date }}</li>
+          <li><strong>Running Time:</strong> {{ film.running_time }} min</li>
+          <li class="flex items-center gap-2">
             <strong>Rating Score:</strong> <StarRating :score="film.rt_score" />
           </li>
         </ul>
 
         <button
-          class="w-24 mt-10 bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-lg text-sm font-medium transition"
+          class="mt-10 bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-6 rounded-lg text-sm font-medium transition"
           @click="$router.back()"
         >
           ← Back
@@ -83,16 +79,16 @@ onMounted(async () => {
   </div>
 
   <div v-else-if="error" class="text-center py-10">
-    <h3 class="text-danger mb-3">Film not found</h3>
+    <h3 class="text-red-600 mb-3 text-lg font-semibold">Film not found</h3>
     <button
-      class="mt-10 w-24 bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-lg text-sm font-medium transition"
+      class="mt-10 bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-6 rounded-lg text-sm font-medium transition"
       @click="$router.back()"
     >
       ← Go Back
     </button>
   </div>
 
-  <div v-else class="text-center py-10 text-muted">
-    <Spinner :message="`Loading details ..`" />
+  <div v-else class="text-center py-10 text-gray-500">
+    <Spinner :message="`Loading details...`" />
   </div>
 </template>
