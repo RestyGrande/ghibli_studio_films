@@ -6,9 +6,6 @@ import Spinner from "@/components/Spinner.vue";
 import FilmCard from "../components/FilmCard.vue";
 
 import { computed, onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
 
 const props = defineProps({
   page: { type: Number, default: 1 },
